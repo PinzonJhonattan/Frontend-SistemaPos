@@ -3,6 +3,8 @@ import { Dropdown } from "primereact/dropdown"
 import { MultiSelect } from "primereact/multiselect"
 import { Button } from "primereact/button"
 import { useState } from "react"
+import NewProduct from "../../new-products/new-product"
+import { Dialog } from "primereact/dialog"
 
 interface SearchFilters {
   searchTerm: string
@@ -17,8 +19,8 @@ interface SearchProductProps {
 }
 
 export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
-  
-  // Estado de los filtros
+  const [visible, setVisible] = useState(false)
+  // Estado local de los filtros
   const [filters, setFilters] = useState<SearchFilters>({
     searchTerm: '',
     categories: [],
@@ -29,26 +31,25 @@ export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
 
   // Opciones de categorías (basadas en los productos mock)
   const categoryOptions = [
-    { label: 'Electrónicos', value: 'Electrónicos' },
-    { label: 'Accesorios', value: 'Accesorios' },
-    { label: 'Audio', value: 'Audio' },
-    { label: 'Almacenamiento', value: 'Almacenamiento' },
-    { label: 'Redes', value: 'Redes' },
-    { label: 'Oficina', value: 'Oficina' },
-    { label: 'Fotografía', value: 'Fotografía' },
-    { label: 'Componentes', value: 'Componentes' }
+    { label: 'Frenos', value: 'Frenos' },
+    { label: 'Suspensión', value: 'Suspensión' },
+    { label: 'Transmisión', value: 'Transmisión' },
+    { label: 'Motor', value: 'Motor' },
+    { label: 'Dirección', value: 'Dirección' },
+    { label: 'Ruedas', value: 'Ruedas' },
+    { label: 'Freno', value: 'Freno' },
+
   ]
 
   // Opciones de marcas (agregando marcas basadas en los productos)
   const brandOptions = [
-    { label: 'HP', value: 'HP' },
-    { label: 'Logitech', value: 'Logitech' },
-    { label: 'Samsung', value: 'Samsung' },
-    { label: 'Sony', value: 'Sony' },
-    { label: 'Canon', value: 'Canon' },
-    { label: 'JBL', value: 'JBL' },
-    { label: 'TP-Link', value: 'TP-Link' },
-    { label: 'Apple', value: 'Apple' },
+    { label: 'Toyota', value: 'Toyota' },     
+    { label: 'Chevrolet', value: 'Chevrolet' }, 
+    { label: 'Nissan', value: 'Nissan' },
+    { label: 'Honda', value: 'Honda' },
+    { label: 'Mazda', value: 'Mazda' },
+    { label: 'Ford', value: 'Ford' },
+    { label: 'Hyundai', value: 'Hyundai' },
   ]
 
   // Opciones de estado
@@ -95,23 +96,23 @@ export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">Búsqueda y Filtros</h3>
-          <p className="text-sm text-gray-600 mt-1">
-            Encuentra productos por código, referencia o descripción
-          </p>
+        <div className="flex items-center justify-between w-full">
+
+          <div className=" items-center gap-2">
+            <h3 className="text-lg font-semibold text-gray-900">Búsqueda y Filtros</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              Encuentra productos por código, referencia o descripción
+            </p>
+          </div>
+          
+
+          <div className="items-center justify-end">
+            <Button label="Nuevo producto" icon="pi pi-plus" onClick={() => setVisible(true)}/> 
+          </div>
+
         </div>
         
-        {hasActiveFilters && (
-          <Button 
-            label="Limpiar Filtros"
-            icon="pi pi-times"
-            size="small"
-            text
-            className="text-gray-600 hover:text-red-600"
-            onClick={clearFilters}
-          />
-        )}
+
       </div>
 
       {/* Búsqueda General */}
@@ -120,6 +121,8 @@ export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
           <i className="pi pi-search mr-2"></i>
           Búsqueda General
         </label>
+
+        
         <div className="relative">
           <InputText 
             value={filters.searchTerm}
@@ -127,7 +130,6 @@ export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
             placeholder="Buscar por código, referencia, descripción..." 
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-          <i className="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
       </div>
 
@@ -244,8 +246,25 @@ export default function SearchProduct({ onFiltersChange }: SearchProductProps) {
               </span>
             )}
           </div>
+          <div className="items-center justify-end">
+            {hasActiveFilters && (
+            <Button 
+              label="Limpiar Filtros"
+              icon="pi pi-times"
+              size="small"
+              text
+              className="text-gray-600 hover:text-red-600"
+              onClick={clearFilters}
+            />
+            )}
+          </div>
         </div>
       )}
+
+      <Dialog visible={visible} onHide={() => setVisible(false)}>
+        <NewProduct onClose={() => setVisible(false)} />
+      </Dialog>
     </div>
+
   )
 }

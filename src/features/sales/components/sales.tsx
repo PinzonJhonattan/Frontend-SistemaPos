@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import ListProducts from './list-products/list-products'
-import SearchProducts from './search-products/search-product'
-import { mockProducts } from '../../services/mock-products'
+import SearchProduct from "./left-sale/search-product"
+import ListProducts from "./left-sale/list-products"
+import { mockProducts } from "../../products/services/mock-products"
+import { useState } from "react"
 
 interface SearchFilters {
   searchTerm: string
@@ -11,27 +11,9 @@ interface SearchFilters {
   stockStatus: string | null
 }
 
-interface Product {
-  id: number
-  name: string
-  category: string
-  brand: string
-  code: string
-  reference: string
-  description: string
-  shelfUbication: number
-  levelUbication: string
-  price: number
-  cost: number
-  stock: number
-  minStock: number
-  maxStock: number
-  status: 'active' | 'inactive'
-}
-
-export default function Products() {
+export default function Sales() {
   // Estado de productos y filtros
-  const [products] = useState<Product[]>(mockProducts as unknown as Product[])
+  const [products] = useState(mockProducts)
   const [filters, setFilters] = useState<SearchFilters>({
     searchTerm: '',
     categories: [],
@@ -41,7 +23,7 @@ export default function Products() {
   })
 
   // Función de filtrado
-  const filterProducts = (products: Product[], filters: SearchFilters): Product[] => {
+  const filterProducts = (products: any[], filters: SearchFilters): any[] => {
     return products.filter(product => {
       // Filtro por término de búsqueda
       if (filters.searchTerm) {
@@ -101,11 +83,50 @@ export default function Products() {
   }
 
   return (
-    <div>
-      <div className="justify-between items-center">
-        <SearchProducts onFiltersChange={handleFiltersChange} />
-        <ListProducts products={filteredProducts} />
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      
+      {/* Columna izquierda - Detalles de la venta */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6 col-span-2">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between w-full">
+            <div className="items-center gap-2">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Detalles de la venta
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Encuentra productos por código, referencia o descripción
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Búsqueda General */}
+        <div className="mb-6">
+          <div className= "mt-4 flex flex-col gap-4">
+            <SearchProduct onFiltersChange={handleFiltersChange} />
+            <ListProducts products={filteredProducts} />  
+          </div>
+        </div>
       </div>
+
+      {/* Columna derecha - Datos del comprobante */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6 col-span-1">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between w-full">
+            <div className="items-center gap-2">
+              <div className="items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Factura de venta
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Resumen de venta
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 }

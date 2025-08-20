@@ -31,10 +31,8 @@ export default function SidebarMenu({ onItemClick }: SidebarMenuProps) {
       items: [
         { label: 'Dashboard', icon: 'pi pi-box', to: '/dashboard' },
         { label: 'Productos', icon: 'pi pi-chart-bar', to: '/products' },
-        { label: 'Clientes', icon: 'pi pi-users', to: '/clientes' },
-        { label: 'Ventas', icon: 'pi pi-shopping-cart', to: '/ventas' },
-        { label: 'Reportes', icon: 'pi pi-chart-bar', to: '/reportes' },
-        { label: 'Configuración', icon: 'pi pi-cog', to: '/configuracion' },  
+        { label: 'Ventas', icon: 'pi pi-shopping-cart', to: '/sales' }, 
+        { label: 'Reportes', icon: 'pi pi-chart-bar', to: '/reports' }, 
       ]
     },
     
