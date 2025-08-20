@@ -3,13 +3,6 @@ import Paginator from './paginator/paginator'
 import HeaderTable from './header-table/header-table'
 import BodyTable from './body-table/body-table'
 
-interface SearchFilters {
-    searchTerm: string
-    categories: string[]
-    brands: string[]
-    status: string | null
-    stockStatus: string | null
-}
 
 interface Product {
     id: number
@@ -38,7 +31,7 @@ export default function ListProducts({ products}: ListProductsProps) {
     const [currentPage, setCurrentPage] = useState(1)
     const [sortField, setSortField] = useState<keyof Product>('id')
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
-    const [itemsPerPage, setItemsPerPage] = useState(8)
+    const [itemsPerPage, setItemsPerPage] = useState(3)
     
     // Ordenamiento
     const sortedProducts = [...products].sort((a, b) => {

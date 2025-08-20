@@ -2,6 +2,7 @@ import SearchProduct from "./left-sale/search-product"
 import ListProducts from "./left-sale/list-products"
 import { mockProducts } from "../../products/services/mock-products"
 import { useState } from "react"
+import SalesSummary from "./right-sale/sales-summary"
 
 interface SearchFilters {
   searchTerm: string
@@ -111,20 +112,7 @@ export default function Sales() {
 
       {/* Columna derecha - Datos del comprobante */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6 col-span-1">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center justify-between w-full">
-            <div className="items-center gap-2">
-              <div className="items-center gap-2">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Factura de venta
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Resumen de venta
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SalesSummary />
       </div>
 
     </div>
